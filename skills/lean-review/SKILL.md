@@ -63,19 +63,21 @@ Once all dispatched specialist agents have returned results, dispatch a single O
 - `model`: `"opus"`
 - `prompt`: the `synthesizer.md` content, followed by all specialist reports concatenated under `## Specialist Reports`
 
-After the synthesizer returns: if Devil's Advocate was dispatched this run and it appears **only** in the synthesizer's "No Action Required" section (verdict = "Existing design holds" — no "Reconsider Design" block present), immediately write the Devil's Advocate marker to the document before proceeding to Step 5. See **Writing the Devil's Advocate Marker** in Step 5.
+After the synthesizer returns: if Devil's Advocate was dispatched this run and `reconsider_design` is `null` in the synthesizer's JSON output, immediately write the Devil's Advocate marker to the document before proceeding to Step 5. See **Writing the Devil's Advocate Marker** in Step 5.
 
 ## Step 5: Drive the Iterative Review Loop
 
-Work through the synthesizer's action list with the user one item at a time:
+The synthesizer returns a JSON object. Work through it with the user one item at a time. **Always render fields as natural prose — never show raw JSON to the user.**
 
-1. Present the highest-priority item from the synthesizer output
-2. Discuss with the user — they choose: **accept**, **reject**, or **modify**
-3. **Accept**: Apply the change to `document_path` using the Edit tool, then restart from Step 1.
-4. **Reject**: Record the item and the user's reason for rejection. Continue to the next item from the *existing* synthesizer output — no re-run needed since the document is unchanged.
-5. **Devil's Advocate "Recommend reconsidering design"**: Surface this verdict as the first item before all others. If the user decides to proceed with the original design, record as rejected, write the Devil's Advocate marker (see below), and continue processing remaining items.
+1. If `reconsider_design` is non-null, surface it **first** before any `issues` items.
+2. Otherwise, present the first unresolved item from the `issues` array (lowest `id` not yet accepted or rejected).
+3. Format each item for the user as: the `summary` prose, then "Source: `source`", then "Why this matters: `priority_rationale`". Use plain markdown — no JSON syntax.
+4. Discuss with the user — they choose: **accept**, **reject**, or **modify**.
+4. **Accept**: Apply the change to `document_path` using the Edit tool, then restart from Step 1.
+5. **Reject**: Record the item's `id` and the user's reason. Continue to the next unresolved `issues` item from the *existing* synthesizer output — no re-run needed since the document is unchanged.
+6. **Devil's Advocate "Reconsider Design"**: If the user decides to proceed with the original design, record as rejected, write the Devil's Advocate marker (see below), and continue processing remaining `issues` items.
 
-The loop ends when the synthesizer produces no new items (all items resolved or panel returns clean).
+The loop ends when `issues` is empty or all items are resolved.
 
 ### Writing the Devil's Advocate Marker
 
@@ -100,7 +102,7 @@ After the iterative loop ends (all synthesizer items resolved), re-read `documen
 - `model`: `"sonnet"`
 - `prompt`: the `consistency-reviewer.md` content, followed by `\n\n## Document to Review\n\n` and the full current document text
 
-If the consistency reviewer returns **Status: Issues Found**, present each issue to the user one at a time (accept / reject / modify), applying accepted fixes with the Edit tool before continuing to the next issue. If the consistency reviewer returns **Status: Approved**, skip directly to Step 7.
+If the consistency reviewer's JSON has `"status": "Issues Found"`, present each item from its `issues` array to the user one at a time (accept / reject / modify), applying accepted fixes with the Edit tool before continuing to the next item. Render each item as prose: `conflict` followed by "Suggested resolution: `resolution`" — no raw JSON. If `"status": "Approved"`, skip directly to Step 7.
 
 The consistency pass does **not** trigger a full panel re-run — it is a targeted final check only.
 

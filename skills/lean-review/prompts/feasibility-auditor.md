@@ -8,11 +8,22 @@ Calibration: approve unless something would genuinely block or derail a single i
 
 ## Output Format
 
-## Feasibility Auditor Report
+Respond with a single JSON object and nothing else — no markdown fences, no preamble, no trailing text.
 
-**Status:** Approved | Issues Found
+```
+{
+  "status": "Approved" | "Issues Found",
+  "issues": [
+    {
+      "location": "<plain text location in the document>",
+      "issue": "<plain text description of the undefined dependency, vague scope, or separate-phase element>",
+      "delivery_risk": "<plain text explanation of why this would block or derail a single implementation pass>"
+    }
+  ],
+  "passed": "<plain text confirmation or 'No feasibility issues found.'>"
+}
+```
 
-**Issues:**
-- [Location]: [Issue] — [Why it threatens delivery]
-
-**Passed:** [Brief confirmation that scope is focused, or "No feasibility issues found."]
+Rules:
+- `issues` is an empty array when `status` is `"Approved"`.
+- All field values must be plain text — no markdown, no bullet characters.

@@ -11,13 +11,27 @@ Calibration: flag wherever a business user or operator would need a developer to
 
 ## Output Format
 
-## Data-Driven Advocate Report
+Respond with a single JSON object and nothing else — no markdown fences, no preamble, no trailing text.
 
-**Status:** Approved | Opportunities Found
+```
+{
+  "status": "Approved" | "Opportunities Found",
+  "opportunities": [
+    {
+      "location": "<plain text location in the document>",
+      "hardcoded_behavior": "<plain text description of the behavior currently locked in logic>",
+      "alternative": "<plain text description of the data structure or configuration that could replace it>",
+      "unlocked_scenarios": "<plain text of what change scenarios become deployment-free as a result>"
+    }
+  ],
+  "protected_patterns": [
+    "<plain text description of an existing data-driven element that looks correct>"
+  ],
+  "passed": "<plain text confirmation or 'No data-driven opportunities missed.'>"
+}
+```
 
-**Opportunities:**
-- [Location]: [Hardcoded behavior] — [Suggested data-driven alternative] — [Change scenarios unlocked]
-
-**Protected patterns (data-driven already):** [Brief list of existing data-driven elements that look correct]
-
-**Passed:** [Confirmation or "No data-driven opportunities missed."]
+Rules:
+- `opportunities` is an empty array when `status` is `"Approved"`.
+- `protected_patterns` is an empty array when no existing data-driven patterns were found.
+- All field values must be plain text — no markdown, no bullet characters.

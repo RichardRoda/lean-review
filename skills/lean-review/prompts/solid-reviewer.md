@@ -20,11 +20,23 @@ Calibration: flag violations that will create real friction — forced rewrites,
 
 ## Output Format
 
-## SOLID Reviewer Report
+Respond with a single JSON object and nothing else — no markdown fences, no preamble, no trailing text.
 
-**Status:** Approved | Issues Found
+```
+{
+  "status": "Approved" | "Issues Found",
+  "issues": [
+    {
+      "principle": "SRP" | "OCP" | "LSP" | "ISP" | "DIP",
+      "location": "<plain text location in the document>",
+      "structural_problem": "<plain text description of the specific structural problem this creates>",
+      "correction": "<plain text recommended correction at the design level>"
+    }
+  ],
+  "passed": "<plain text confirmation or 'No SOLID violations found at this design level.'>"
+}
+```
 
-**Issues:**
-- [Principle]: [Location] — [Structural problem] — [Recommended correction]
-
-**Passed:** [Brief confirmation of what looks well-structured, or "No SOLID violations found at this design level."]
+Rules:
+- `issues` is an empty array when `status` is `"Approved"`.
+- All field values must be plain text — no markdown, no bullet characters.

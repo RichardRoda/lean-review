@@ -18,11 +18,23 @@ Calibration: flag design decisions that create security risk. Do not flag implem
 
 ## Output Format
 
-## Security Expert Report
+Respond with a single JSON object and nothing else — no markdown fences, no preamble, no trailing text.
 
-**Status:** Approved | Issues Found
+```
+{
+  "status": "Approved" | "Issues Found",
+  "issues": [
+    {
+      "dimension": "Confidentiality" | "Integrity" | "Availability" | "Best Practice",
+      "location": "<plain text location in the document>",
+      "risk": "<plain text description of the specific risk>",
+      "mitigation": "<plain text recommended mitigation at the design level>"
+    }
+  ],
+  "passed": "<plain text confirmation or 'No security issues found at this design level.'>"
+}
+```
 
-**Issues:**
-- [CIA Dimension / Practice]: [Location] — [Risk] — [Recommended mitigation]
-
-**Passed:** [Brief confirmation of what looks secure, or "No security issues found at this design level."]
+Rules:
+- `issues` is an empty array when `status` is `"Approved"`.
+- All field values must be plain text — no markdown, no bullet characters.

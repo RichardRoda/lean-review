@@ -21,11 +21,23 @@ Calibration: assume the maintainer is competent but has no prior context on this
 
 ## Output Format
 
-## Maintainability Reviewer Report
+Respond with a single JSON object and nothing else — no markdown fences, no preamble, no trailing text.
 
-**Status:** Approved | Issues Found
+```
+{
+  "status": "Approved" | "Issues Found",
+  "issues": [
+    {
+      "location": "<plain text location in the document>",
+      "problem": "<plain text description of what creates the maintainability problem>",
+      "maintainer_impact": "<plain text of what a future developer would struggle with>",
+      "recommendation": "<plain text of what the design should add or clarify>"
+    }
+  ],
+  "passed": "<plain text confirmation or 'No maintainability issues found.'>"
+}
+```
 
-**Issues:**
-- [Location]: [Maintainability problem] — [What a maintainer would struggle with] — [What to add or clarify]
-
-**Passed:** [Brief confirmation of what looks clear and well-structured, or "No maintainability issues found."]
+Rules:
+- `issues` is an empty array when `status` is `"Approved"`.
+- All field values must be plain text — no markdown, no bullet characters.

@@ -14,26 +14,33 @@ You are a synthesizer. You have received reports from 8 specialist reviewers. Yo
 
 ## Output Format
 
-## Synthesizer Action List
+Respond with a single JSON object and nothing else — no markdown fences, no preamble, no trailing text.
 
-### Reconsider Design
-*(Include this section only if Devil's Advocate verdict = "Recommend reconsidering design")*
-[Alternative approach summary in 2–3 sentences]
-Source: Devil's Advocate
+```
+{
+  "reconsider_design": null | {
+    "summary": "<2–3 sentence prose description of the alternative approach>",
+    "source": "Devil's Advocate"
+  },
+  "issues": [
+    {
+      "id": <integer, 1-based>,
+      "summary": "<full prose description of the issue with enough detail for the author to understand and act>",
+      "source": "<Reviewer name, or 'Scope Minimizer + Complexity Challenger' when merged>",
+      "priority_rationale": "<prose explanation of why this ranks here>"
+    }
+  ],
+  "no_action": [
+    {
+      "reviewer": "<Reviewer name>",
+      "note": "<prose of what was approved or what verdict was reached>"
+    }
+  ]
+}
+```
 
-### Prioritized Issues
-1. [Priority 1 issue] — Source: [Reviewer name] — Priority rationale: [Why this comes first]
-2. [Priority 2 issue] — Source: [Reviewer name] — Priority rationale: [Why]
-...
-
-### No Action Required
-- Scope Minimizer: [What it approved]
-- Complexity Challenger: [What it approved]
-- Feasibility Auditor: [What it approved]
-- Data-Driven Advocate: [What it approved]
-- Maintainability Reviewer: [What it approved]
-- Devil's Advocate: [Verdict and alternatives considered]
-- Security Expert: [What it approved]
-- SOLID Reviewer: [What it approved]
-
-*(Omit any reviewer from "No Action Required" if they appear in the issues list)*
+Rules:
+- `reconsider_design` is `null` when Devil's Advocate verdict is "Existing design holds" or Devil's Advocate was not run.
+- `issues` is an empty array when no actionable issues were found.
+- Omit a reviewer from `no_action` if they appear as a source in `issues`.
+- All prose fields (`summary`, `priority_rationale`, `note`) must be plain text — no markdown, no bullet characters.

@@ -23,11 +23,22 @@ Calibration: flag only genuine conflicts — places where a careful reader would
 
 ## Output Format
 
-## Consistency Reviewer Report
+Respond with a single JSON object and nothing else — no markdown fences, no preamble, no trailing text.
 
-**Status:** Approved | Issues Found
+```
+{
+  "status": "Approved" | "Issues Found",
+  "issues": [
+    {
+      "id": <integer, 1-based>,
+      "conflict": "<prose: quote or paraphrase both conflicting statements and their locations>",
+      "resolution": "<prose: which version to keep, or what clarification is needed>"
+    }
+  ],
+  "passed": "<prose confirmation that the document is internally consistent, or 'No consistency issues found.'>"
+}
+```
 
-**Issues:**
-- [Location A] vs [Location B]: [Statement A] conflicts with [Statement B] — [How to resolve]
-
-**Passed:** [Brief confirmation that the document is internally consistent, or "No consistency issues found."]
+Rules:
+- `issues` is an empty array when `status` is `"Approved"`.
+- All prose fields (`conflict`, `resolution`, `passed`) must be plain text — no markdown, no bullet characters.

@@ -15,14 +15,23 @@ Calibration: the "considered but rejected" list is required even on approval —
 
 ## Output Format
 
-## Devil's Advocate Report
+Respond with a single JSON object and nothing else — no markdown fences, no preamble, no trailing text.
 
-**Verdict:** Recommend reconsidering design | Existing design holds
+```
+{
+  "verdict": "Recommend reconsidering design" | "Existing design holds",
+  "alternative_approach": "<3–5 sentence plain text description of the alternative, why it is better, and what it trades off — or null when verdict is 'Existing design holds'>",
+  "affirmation": "<plain text of why the existing design is the stronger choice — or null when verdict is 'Recommend reconsidering design'>",
+  "alternatives_considered": [
+    {
+      "alternative": "<plain text name or description of the alternative>",
+      "why_inferior": "<plain text explanation of why it was rejected>"
+    }
+  ]
+}
+```
 
-**Alternative approach:** [3–5 sentence description, why better, trade-offs]
-OR
-**Affirmation:** [Why existing design is the stronger choice]
-
-**Alternatives considered and rejected:**
-- [Alternative]: [Why inferior]
-- [Alternative]: [Why inferior]
+Rules:
+- Exactly one of `alternative_approach` or `affirmation` is non-null, matching the `verdict`.
+- `alternatives_considered` must always be populated — it proves the work was done.
+- All field values must be plain text — no markdown, no bullet characters.

@@ -11,11 +11,22 @@ Calibration: approve unless something is clearly unasked-for. Do not flag data-d
 
 ## Output Format
 
-## Scope Minimizer Report
+Respond with a single JSON object and nothing else — no markdown fences, no preamble, no trailing text.
 
-**Status:** Approved | Issues Found
+```
+{
+  "status": "Approved" | "Issues Found",
+  "issues": [
+    {
+      "location": "<plain text location in the document>",
+      "issue": "<plain text description of the unasked-for requirement or feature>",
+      "rationale": "<plain text: what explicit user need, if any, could justify it — if none, state that>"
+    }
+  ],
+  "passed": "<plain text confirmation or 'No scope issues found.'>"
+}
+```
 
-**Issues:**
-- [Location]: [Issue] — [Why it matters]
-
-**Passed:** [Brief confirmation of what looks clean, or "No scope issues found."]
+Rules:
+- `issues` is an empty array when `status` is `"Approved"`.
+- All field values must be plain text — no markdown, no bullet characters.

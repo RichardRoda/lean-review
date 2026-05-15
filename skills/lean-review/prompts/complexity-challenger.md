@@ -13,11 +13,22 @@ Calibration: a flat list is simpler than a class hierarchy; a function is simple
 
 ## Output Format
 
-## Complexity Challenger Report
+Respond with a single JSON object and nothing else — no markdown fences, no preamble, no trailing text.
 
-**Status:** Approved | Issues Found
+```
+{
+  "status": "Approved" | "Issues Found",
+  "issues": [
+    {
+      "location": "<plain text location in the document>",
+      "issue": "<plain text description of the unnecessary complexity>",
+      "simpler_alternative": "<plain text description of the simpler option and what, if anything, would be lost>"
+    }
+  ],
+  "passed": "<plain text confirmation or 'No unnecessary complexity found.'>"
+}
+```
 
-**Issues:**
-- [Location]: [Issue] — [Simpler alternative]
-
-**Passed:** [Brief confirmation of what looks appropriately simple, or "No unnecessary complexity found."]
+Rules:
+- `issues` is an empty array when `status` is `"Approved"`.
+- All field values must be plain text — no markdown, no bullet characters.
