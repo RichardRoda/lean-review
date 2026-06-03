@@ -10,6 +10,8 @@ This plugin arguments the superpowers skills relating to specifications and plan
 * Devil's Advocate - Propose superior alternative or affirm (credit: Alex Michael)
 * Security Expert - CIA triad + best practices 
 * SOLID Principles - Martin Fowler's SOLID principles (credit: Babu Paritala)
+* Auditability Advocate - Ensure results, calculations, and decisions have durable, traceable evidence
+* Observability Advocate - Ensure operations have sufficient logging to answer operational questions after the fact
 * Consistency Checker - Ensure document is consistent and has no contradictions.
 
 Why focus so much on the planning stage?  Because agent driven software development is basically the [Waterfall Model](https://en.wikipedia.org/wiki/Waterfall_model), but at [Ludicrous Speed](https://www.youtube.com/watch?v=NAWL8ejf2nM).  It is quicker and cheaper to fix issues at this stage than later after the code is written.
