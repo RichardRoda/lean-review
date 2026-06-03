@@ -1,4 +1,4 @@
-# The lean-review adds a skill to review a specification or plan using a panel of reviewers
+# lean-review: A Claude Code skill to review a specification or plan using a panel of reviewers
 
 This plugin arguments the superpowers skills relating to specifications and plans, or may be used standalone.  These reviewers are designed for specification and planning, not code review.  A synthesizer takes the output from the specialists and deduplicates as well as deals with conflicts. For example if the Complexity Challenger and Data-Driven Advocate disagree the Advocate wins.  The following reviewers are configured
 
