@@ -1,13 +1,15 @@
-# lean-review: A Claude Code skill to review a specification or plan using a panel of reviewers
+# The lean-review skill reviews a specification or plan using a panel of reviewers
 
-This plugin arguments the superpowers skills relating to specifications and plans, or may be used standalone.  These reviewers are designed for specification and planning, not code review.  A synthesizer takes the output from the specialists and deduplicates as well as deals with conflicts. For example if the Complexity Challenger and Data-Driven Advocate disagree the Advocate wins.  The following reviewers are configured
+AI is reasonably good at implementing requirements, but not the boring but important stuff.  Things like will the code be maintainable?  Will its actions be auditable?  Is it secure?  Can an operator verify how it ran?  Is it configurable?  Does it follow good development practices?  This is the difference between production-ready code and prototype quality code.
+
+This plugin augments the superpowers skills relating to specifications and plans, or may be used standalone.  These reviewers are designed for specification and planning, not code review.  A synthesizer takes the output from the specialists and deduplicates as well as deals with conflicts. For example if the Complexity Challenger and Data-Driven Advocate disagree the Advocate wins.  The following reviewers are configured
 
 * Scope Minimizer - Cut unasked-for features
-* Complexity Challenger - Simplify, exempt data-driven patterns
+* Complexity Challenger - Simplify, exempt data-driven, auditability, and observability patterns
 * Feasibility Auditor - Enforce single-plan boundary
 * Data-Driven Advocate - Push behavior into config/data
 * Maintainability Reviewer - Comprehensibility, modularity, debuggability
-* Devil's Advocate - Propose superior alternative or affirm (credit: Alex Michael)
+* Devil's Advocate - Runs once and proposes a superior alternative or affirms existing (credit: Alex Michael)
 * Security Expert - CIA triad + best practices 
 * SOLID Principles - Martin Fowler's SOLID principles (credit: Babu Paritala)
 * Auditability Advocate - Ensure results, calculations, and decisions have durable, traceable evidence
